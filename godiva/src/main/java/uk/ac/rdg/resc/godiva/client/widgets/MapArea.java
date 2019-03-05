@@ -39,6 +39,8 @@ import org.gwtopenmaps.openlayers.client.MapOptions;
 import org.gwtopenmaps.openlayers.client.MapWidget;
 import org.gwtopenmaps.openlayers.client.Projection;
 import org.gwtopenmaps.openlayers.client.control.EditingToolbar;
+import org.gwtopenmaps.openlayers.client.control.Graticule;
+import org.gwtopenmaps.openlayers.client.control.GraticuleOptions;
 import org.gwtopenmaps.openlayers.client.control.LayerSwitcher;
 import org.gwtopenmaps.openlayers.client.control.MousePosition;
 import org.gwtopenmaps.openlayers.client.control.PanZoom;
@@ -984,6 +986,43 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         map.addControl(new LayerSwitcher());
         map.addControl(new MousePosition());
         map.addControl(new PanZoom());
+        
+        /*
+         * add LineSymbolizer and TextSymbolizer if necessary:
+         * 
+         * do some imports at the top:
+        import org.gwtopenmaps.openlayers.client.symbolizer.LineSymbolizer;
+		import org.gwtopenmaps.openlayers.client.symbolizer.LineSymbolizerOptions;
+		import org.gwtopenmaps.openlayers.client.symbolizer.TextSymbolizer;
+		import org.gwtopenmaps.openlayers.client.symbolizer.TextSymbolizerOptions;
+		 * 
+        LineSymbolizerOptions lineOptions = new LineSymbolizerOptions();
+        lineOptions.setStrokeColor("#ccccff");
+        lineOptions.setStrokeOpacity(0.5);
+        lineOptions.setStrokeWidth(1);
+
+        LineSymbolizer line = new LineSymbolizer(lineOptions);
+
+        TextSymbolizerOptions textOptions = new TextSymbolizerOptions();
+        textOptions.setFontSize("9px");
+
+		TextSymbolizer text = new TextSymbolizer(textOptions);
+		* 
+		* and add it to the GraticuleControl:
+
+		grtOptions.setLineSymbolyzer(line);
+		grtOptions.setLabelSymbolizer(text);
+
+         */
+        final GraticuleOptions grtOptions = new GraticuleOptions();
+
+        grtOptions.setTargetSize(200);
+		grtOptions.setLabelled(true);
+		grtOptions.setLabelFormat('D3');
+		Graticule graticule = new Graticule(grtOptions);
+        graticule.setAutoActivate(true);
+        map.addControl(graticule);
+        
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
         map.setCenter(new LonLat(0.0, 0.0), 2);
