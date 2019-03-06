@@ -956,7 +956,7 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
      * clients, so put it in a method which can be overridden
      */
     protected Image getLogo() {
-        Image ret = new Image(GWT.getModuleBaseURL() + "img/logo.png");
+        Image ret = new Image(GWT.getModuleBaseURL() + "img/logo-ReSC.png");
         ret.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
