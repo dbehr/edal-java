@@ -256,7 +256,6 @@
     </distributionManagement>
     <modules>
         <!-- Note that these are relative directory paths, not artifactIds! -->
-        <module>examples</module>
         <module>common</module>
         <module>graphics</module>
         <module>godiva</module>
