@@ -135,15 +135,15 @@ public class LayoutManager {
         ScrollPanel layerScrollPanel = new ScrollPanel(layerSelector.asWidget());
         layerScrollPanel.setHeight(((int) mapArea.getMap().getSize().getHeight() + 190 - logoSpace)
                 + "px");
-        layerScrollPanel.setWidth("250px");
-        layerSelector.asWidget().setWidth("250px");
+        layerScrollPanel.setWidth("300px");
+        layerSelector.asWidget().setWidth("300px");
 
         VerticalPanel leftPanel = new VerticalPanel();
-        leftPanel.add(rescLogo);
         leftPanel.setCellHeight(rescLogo, logoSpace + "px");
         leftPanel.setCellVerticalAlignment(rescLogo, HasVerticalAlignment.ALIGN_MIDDLE);
         leftPanel.setCellHorizontalAlignment(rescLogo, HasHorizontalAlignment.ALIGN_CENTER);
         leftPanel.add(layerScrollPanel);
+        leftPanel.add(rescLogo);
 
         mainWindow.add(leftPanel);
         mainWindow.add(vPanel);
