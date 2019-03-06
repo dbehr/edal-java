@@ -1,3 +1,11 @@
+1.4.2
+=====
+Changed to HZG Layout
+Increased Menu width
+GraticuleControl added to map
+Individual Header added to Godiva3 page
+Switch URLs to forked Repo
+
 1.4.1
 =====
 Improved data writing / reading efficiency
