@@ -8,6 +8,7 @@ target/
 .h2/
 gwt-unitCache/
 out/
+ncwms/
 
 # Module specific
 graphics/dependency-reduced-pom.xml
