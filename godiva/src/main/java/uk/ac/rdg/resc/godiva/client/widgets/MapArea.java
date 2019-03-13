@@ -102,6 +102,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
      * correct (regardless of WMS version)
      */
     protected static final Projection CRS84 = new Projection("CRS:84");
+    protected static final Projection EPSG4326 = new Projection("EPSG:4326");
+    protected static final Projection EPSG3857 = new Projection("EPSG:3857");
     protected static final NumberFormat FORMATTER = NumberFormat.getFormat("###.#####");
 
     /**
@@ -968,7 +970,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
         mapOptions.setProjection("CRS:84");
-        mapOptions.setDisplayProjection(CRS84);
+        /* mapOptions.setDisplayProjection(CRS84); */
+        mapOptions.setDisplayProjection(EPSG4326);
         mapOptions.removeDefaultControls();
         mapOptions.setControls(new JObjectArray(new JSObject[0]));
         JSObject vendorParams = JSObject.createJSObject();
@@ -1018,14 +1021,14 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
         grtOptions.setTargetSize(200);
 		grtOptions.setLabelled(true);
-		/* grtOptions.setLabelFormat("D3"); */
+		grtOptions.setLabelFormat("D4");
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
         map.addControl(graticule);
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 0.0), 2);
+        map.setCenter(new LonLat(0.0, 45.0), 3);
         map.setFractionalZoom(true);
     }
 

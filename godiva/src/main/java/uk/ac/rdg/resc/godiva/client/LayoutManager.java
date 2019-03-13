@@ -139,11 +139,11 @@ public class LayoutManager {
         layerSelector.asWidget().setWidth("300px");
 
         VerticalPanel leftPanel = new VerticalPanel();
+        leftPanel.add(layerScrollPanel);
+        leftPanel.add(rescLogo);
         leftPanel.setCellHeight(rescLogo, logoSpace + "px");
         leftPanel.setCellVerticalAlignment(rescLogo, HasVerticalAlignment.ALIGN_MIDDLE);
         leftPanel.setCellHorizontalAlignment(rescLogo, HasHorizontalAlignment.ALIGN_CENTER);
-        leftPanel.add(layerScrollPanel);
-        leftPanel.add(rescLogo);
 
         mainWindow.add(leftPanel);
         mainWindow.add(vPanel);
