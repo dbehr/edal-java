@@ -969,11 +969,11 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
-        /* mapOptions.setProjection("CRS:84"); */
-        mapOptions.setProjection("EPSG:3857");
+        mapOptions.setProjection("CRS:84");
+        /* mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
         mapOptions.setDisplayProjection(EPSG3857); */
-        mapOptions.setDisplayProjection(EPSG3857);
+        mapOptions.setDisplayProjection(EPSG4326);
         mapOptions.removeDefaultControls();
         mapOptions.setControls(new JObjectArray(new JSObject[0]));
         JSObject vendorParams = JSObject.createJSObject();
@@ -1021,9 +1021,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(300);
+        grtOptions.setTargetSize(200);
 		grtOptions.setLabelled(true);
-		grtOptions.setLabelFormat("D3");
+		grtOptions.setLabelFormat("dms");
 		/* grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
@@ -1031,7 +1031,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 40.0), 4);
+        map.setCenter(new LonLat(0.0, 0.0), 3);
         map.setFractionalZoom(true);
     }
 
@@ -1256,8 +1256,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          * Basemap from demis.nl
          */
         wmsOptions = new WMSOptions();
-        /* wmsOptions.setProjection("EPSG:4326"); */
-        wmsOptions.setProjection("EPSG:3857");
+        wmsOptions.setProjection("EPSG:4326");
         wmsOptions.setWrapDateLine(true);
         wmsOptions.setTransitionEffect(TransitionEffect.MAP_RESIZE);
         wmsParams = new WMSParams();
@@ -1317,8 +1316,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         baseUrlForExport = rescMapServerUrl;
         layersForExport = "naturalearth";
-        /*map.setBaseLayer(naturalEarth);*/
-        map.setBaseLayer(demis);
+        map.setBaseLayer(naturalEarth);
+        /* layersForExport = "demis";
+        map.setBaseLayer(demis); */
 
         map.addMapBaseLayerChangedListener(new MapBaseLayerChangedListener() {
             @Override
