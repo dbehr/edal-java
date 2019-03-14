@@ -1022,8 +1022,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
         grtOptions.setTargetSize(300);
-		/* grtOptions.setLabelled(true); */
-		grtOptions.setLabelFormat("dm");
+		grtOptions.setLabelled(true);
+		grtOptions.setLabelFormat("D3");
 		/* grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
