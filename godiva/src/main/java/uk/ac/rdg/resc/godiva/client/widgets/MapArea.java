@@ -970,8 +970,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
         mapOptions.setProjection("CRS:84");
-        /* mapOptions.setDisplayProjection(CRS84); */
-        mapOptions.setDisplayProjection(EPSG4326);
+        /* mapOptions.setDisplayProjection(CRS84);
+        mapOptions.setDisplayProjection(EPSG4326); */
+        mapOptions.setDisplayProjection(EPSG3857);
         mapOptions.removeDefaultControls();
         mapOptions.setControls(new JObjectArray(new JSObject[0]));
         JSObject vendorParams = JSObject.createJSObject();
@@ -1019,16 +1020,17 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(200);
-		grtOptions.setLabelled(true);
-		grtOptions.setLabelFormat("d3");
+        grtOptions.setTargetSize(300);
+		/* grtOptions.setLabelled(true); */
+		grtOptions.setLabelFormat("D3");
+		grtOptions.setDisplayProjection(EPSG4326);
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
         map.addControl(graticule);
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 45.0), 3);
+        map.setCenter(new LonLat(0.0, 40.0), 4);
         map.setFractionalZoom(true);
     }
 
