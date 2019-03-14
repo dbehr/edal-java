@@ -60,7 +60,6 @@ import org.gwtopenmaps.openlayers.client.geometry.Point;
 import org.gwtopenmaps.openlayers.client.layer.Image;
 import org.gwtopenmaps.openlayers.client.layer.ImageOptions;
 import org.gwtopenmaps.openlayers.client.layer.Layer;
-import org.gwtopenmaps.openlayers.client.layer.OSM;
 import org.gwtopenmaps.openlayers.client.layer.TransitionEffect;
 import org.gwtopenmaps.openlayers.client.layer.Vector;
 import org.gwtopenmaps.openlayers.client.layer.WMS;
@@ -970,9 +969,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
-        mapOptions.setProjection("EPSG:3857");
-        /* mapOptions.setProjection("CRS:84");
-        mapOptions.setProjection("EPSG:3857"); */
+        mapOptions.setProjection("CRS:84");
+        /* mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
         mapOptions.setDisplayProjection(EPSG3857); */
         mapOptions.setDisplayProjection(EPSG4326);
@@ -1023,9 +1021,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(400);
-		/* grtOptions.setLabelled(true);*/
-		grtOptions.setLabelFormat("D3");
+        grtOptions.setTargetSize(200);
+		grtOptions.setLabelled(true);
+		grtOptions.setLabelFormat("dms");
 		/* grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
@@ -1033,7 +1031,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 20.0), 3);
+        map.setCenter(new LonLat(0.0, 0.0), 3);
         map.setFractionalZoom(true);
     }
 
@@ -1188,6 +1186,73 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         blueMarble.setIsBaseLayer(true);
 
         /*
+         * These are the bounds of ALL OF the polar layers (i.e. North AND
+         * South) on the ReSC server
+         */
+        Bounds polarMaxExtent = new Bounds(-4000000, -4000000, 8000000, 8000000);
+        float polarMaxResolution = (float) ((polarMaxExtent.getUpperRightX()
+                - polarMaxExtent.getLowerLeftX()) / 512.0);
+
+        /*
+         * ReSC Natural Earth North Pole
+         */
+        wmsNorthPolarOptions = new WMSOptions();
+        wmsNorthPolarOptions.setProjection("EPSG:5041");
+        wmsNorthPolarOptions.setMaxExtent(polarMaxExtent);
+        wmsNorthPolarOptions.setMaxResolution(polarMaxResolution);
+        wmsNorthPolarOptions.setTransitionEffect(TransitionEffect.RESIZE);
+        wmsNorthPolarOptions.setWrapDateLine(false);
+
+        wmsParams = new WMSParams();
+        wmsParams.setLayers("naturalearth-np");
+        wmsParams.setFormat("image/png");
+        wmsParams.setParameter("version", "1.3.0");
+        WMS naturalEarthNP = new WMS("North polar stereographic (NaturalEarth)", rescMapServerUrl,
+                wmsParams, wmsNorthPolarOptions);
+        naturalEarthNP.setIsBaseLayer(true);
+
+        /*
+         * ReSC Blue Marble North Pole
+         */
+        wmsParams = new WMSParams();
+        wmsParams.setLayers("bluemarble-np");
+        wmsParams.setFormat("image/png");
+        wmsParams.setParameter("version", "1.3.0");
+        WMS blueMarbleNP = new WMS("North polar stereographic (BlueMarble)", rescMapServerUrl,
+                wmsParams, wmsNorthPolarOptions);
+        blueMarbleNP.setIsBaseLayer(true);
+        blueMarbleNP.setSingleTile(true);
+
+        /*
+         * ReSC Natural Earth South Pole
+         */
+        wmsSouthPolarOptions = new WMSOptions();
+        wmsSouthPolarOptions.setProjection("EPSG:5042");
+        wmsSouthPolarOptions.setMaxExtent(polarMaxExtent);
+        wmsSouthPolarOptions.setMaxResolution(polarMaxResolution);
+        wmsSouthPolarOptions.setTransitionEffect(TransitionEffect.RESIZE);
+        wmsSouthPolarOptions.setWrapDateLine(false);
+
+        wmsParams = new WMSParams();
+        wmsParams.setLayers("naturalearth-sp");
+        wmsParams.setFormat("image/png");
+        wmsParams.setParameter("version", "1.3.0");
+        WMS naturalEarthSP = new WMS("South polar stereographic (NaturalEarth)", rescMapServerUrl,
+                wmsParams, wmsSouthPolarOptions);
+        naturalEarthSP.setIsBaseLayer(true);
+
+        /*
+         * ReSC Blue Marble South Pole
+         */
+        wmsParams = new WMSParams();
+        wmsParams.setLayers("bluemarble-sp");
+        wmsParams.setFormat("image/png");
+        wmsParams.setParameter("version", "1.3.0");
+        WMS blueMarbleSP = new WMS("South polar stereographic (BlueMarble)", rescMapServerUrl,
+                wmsParams, wmsSouthPolarOptions);
+        blueMarbleSP.setIsBaseLayer(true);
+
+        /*
          * Basemap from demis.nl
          */
         wmsOptions = new WMSOptions();
@@ -1223,15 +1288,6 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         gebco.addLayerLoadEndListener(loadEndListener);
 
         /*
-         * OpenStreetMap baselayer (added 20190314)
-         */
-		OSM osmMapnik = OSM.Mapnik("Mapnik");
-        osmMapnik.setIsBaseLayer(true);
-        osmMapnik.addLayerLoadStartListener(loadStartListener);
-        osmMapnik.addLayerLoadEndListener(loadEndListener);
-
-
-        /*
          * Add all of the layers in the order we want them displayed
          */
         map.addLayer(naturalEarth);
@@ -1239,7 +1295,10 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         map.addLayer(nasaBlueMarble);
         map.addLayer(demis);
         map.addLayer(gebco);
-        map.addLayer(osmMapnik);
+        map.addLayer(naturalEarthNP);
+        map.addLayer(blueMarbleNP);
+        map.addLayer(naturalEarthSP);
+        map.addLayer(blueMarbleSP);
 
         /*
          * Now global setup stuff. Store the current projection, add the layer
@@ -1256,10 +1315,10 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          * too.
          */
         baseUrlForExport = rescMapServerUrl;
-        /* layersForExport = "naturalearth";
-        map.setBaseLayer(naturalEarth); */
-        layersForExport = "osmMapnik";
-        map.setBaseLayer(osmMapnik);
+        layersForExport = "naturalearth";
+        map.setBaseLayer(naturalEarth);
+        /* layersForExport = "demis";
+        map.setBaseLayer(demis); */
 
         map.addMapBaseLayerChangedListener(new MapBaseLayerChangedListener() {
             @Override
