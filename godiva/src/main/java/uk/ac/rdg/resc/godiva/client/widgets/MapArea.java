@@ -59,7 +59,6 @@ import org.gwtopenmaps.openlayers.client.geometry.LineString;
 import org.gwtopenmaps.openlayers.client.geometry.Point;
 import org.gwtopenmaps.openlayers.client.layer.Image;
 import org.gwtopenmaps.openlayers.client.layer.ImageOptions;
-import org.gwtopenmaps.openlayers.client.layer.OSM;
 import org.gwtopenmaps.openlayers.client.layer.Layer;
 import org.gwtopenmaps.openlayers.client.layer.TransitionEffect;
 import org.gwtopenmaps.openlayers.client.layer.Vector;
@@ -1022,8 +1021,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(400);
-		/* grtOptions.setLabelled(true);*/
+        grtOptions.setTargetSize(200);
+		grtOptions.setLabelled(true);
 		grtOptions.setLabelFormat("dms");
 		/* grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
@@ -1289,14 +1288,6 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         gebco.addLayerLoadEndListener(loadEndListener);
 
         /*
-         * Basemaps from GEBCO. Note that these need a special copyright message
-         */
-		OSM osmMapnik = OSM.Mapnik("Mapnik");
-		osmMapnik.setIsBaseLayer(true);
-        osmMapnik.addLayerLoadStartListener(loadStartListener);
-        osmMapnik.addLayerLoadEndListener(loadEndListener);
-
-        /*
          * Add all of the layers in the order we want them displayed
          */
         map.addLayer(naturalEarth);
@@ -1308,7 +1299,6 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         map.addLayer(blueMarbleNP);
         map.addLayer(naturalEarthSP);
         map.addLayer(blueMarbleSP);
-        map.addLayer(osmMapnik);
 
         /*
          * Now global setup stuff. Store the current projection, add the layer
