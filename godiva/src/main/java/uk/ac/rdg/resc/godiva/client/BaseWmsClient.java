@@ -140,6 +140,8 @@ public abstract class BaseWmsClient
                 .setWindow(ScriptInjector.TOP_WINDOW).inject();
         ScriptInjector.fromString(JavascriptDependencies.INSTANCE.projections().getText())
                 .setWindow(ScriptInjector.TOP_WINDOW).inject();
+        ScriptInjector.fromString(JavascriptDependencies.INSTANCE.openStreetMap().getText())
+                .setWindow(ScriptInjector.TOP_WINDOW).inject();
 
         /*
          * The location of the config servlet is hard-coded. If it is not found,

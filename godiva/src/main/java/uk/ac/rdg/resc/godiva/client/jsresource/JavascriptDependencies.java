@@ -49,4 +49,7 @@ public  interface JavascriptDependencies extends ClientBundle {
 
     @Source("uk/ac/rdg/resc/godiva/public/js/projections.js")
     public TextResource projections();
+
+    @Source("uk/ac/rdg/resc/godiva/public/js/OpenStreetMap.js")
+    public TextResource openStreetMap();
 }
