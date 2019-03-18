@@ -970,8 +970,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
-        mapOptions.setProjection("CRS:84");
-        /* mapOptions.setProjection("EPSG:3857"); */
+        mapOptions.setProjection("EPSG:3857");
+        /* mapOptions.setProjection("CRS:84");
+         * mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
         mapOptions.setDisplayProjection(EPSG3857); */
         mapOptions.setDisplayProjection(EPSG4326);
@@ -1022,10 +1023,11 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(400);
-		/* grtOptions.setLabelled(true);*/
-		grtOptions.setLabelFormat("dms");
-		/* grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
+        grtOptions.setTargetSize(100);
+		grtOptions.setLabelled(true);
+		grtOptions.setLabelFormat("D3");
+		/* grtOptions.setLabelFormat("dms");
+		grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
         map.addControl(graticule);
@@ -1304,10 +1306,10 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         map.addLayer(nasaBlueMarble);
         map.addLayer(demis);
         map.addLayer(gebco);
-        map.addLayer(naturalEarthNP);
+        /* map.addLayer(naturalEarthNP);
         map.addLayer(blueMarbleNP);
         map.addLayer(naturalEarthSP);
-        map.addLayer(blueMarbleSP);
+        map.addLayer(blueMarbleSP); */
         map.addLayer(osmMapnik);
 
         /*
@@ -1325,10 +1327,11 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          * too.
          */
         baseUrlForExport = rescMapServerUrl;
-        layersForExport = "naturalearth";
-        map.setBaseLayer(naturalEarth);
-        /* layersForExport = "demis";
-        map.setBaseLayer(demis); */
+        
+        /* layersForExport = "naturalearth";
+        map.setBaseLayer(naturalEarth); */
+        layersForExport = "osmMapnik";
+        map.setBaseLayer(osmMapnik);
 
         map.addMapBaseLayerChangedListener(new MapBaseLayerChangedListener() {
             @Override
