@@ -136,7 +136,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
             if (projection != null) {
                 this.projection = projection;
             } else {
-                this.projection = "CRS:84";
+                //this.projection = "CRS:84";
+                this.projection = "EPSG:3857";
             }
             if (imageFormat != null) {
                 this.imageFormat = imageFormat;
@@ -970,12 +971,12 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
-        mapOptions.setProjection("EPSG:3857");
+        mapOptions.setProjection("EPSG:4326");
         /* mapOptions.setProjection("CRS:84");
          * mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
-        mapOptions.setDisplayProjection(EPSG3857); */
-        mapOptions.setDisplayProjection(EPSG4326);
+        mapOptions.setDisplayProjection(EPSG3857 EPSG4326); */
+        mapOptions.setDisplayProjection(EPSG3857);
         mapOptions.removeDefaultControls();
         mapOptions.setControls(new JObjectArray(new JSObject[0]));
         JSObject vendorParams = JSObject.createJSObject();
@@ -1023,9 +1024,9 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
-        grtOptions.setTargetSize(100);
+        grtOptions.setTargetSize(300);
 		grtOptions.setLabelled(true);
-		grtOptions.setLabelFormat("D3");
+		grtOptions.setLabelFormat("d3");
 		/* grtOptions.setLabelFormat("dms");
 		grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
@@ -1034,7 +1035,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 0.0), 3);
+        map.setCenter(new LonLat(0.0, 20.0), 4);
         map.setFractionalZoom(true);
     }
 
