@@ -971,7 +971,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
     protected static MapOptions getDefaultMapOptions() {
         MapOptions mapOptions = new MapOptions();
-        mapOptions.setProjection("EPSG:4326");
+        mapOptions.setProjection("CRS:84");
         /* mapOptions.setProjection("CRS:84");
          * mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
@@ -1026,7 +1026,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
 
         grtOptions.setTargetSize(300);
 		grtOptions.setLabelled(true);
-		grtOptions.setLabelFormat("d3");
+		grtOptions.setLabelFormat("D3");
 		/* grtOptions.setLabelFormat("dms");
 		grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
 		Graticule graticule = new Graticule(grtOptions);
@@ -1035,7 +1035,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 20.0), 4);
+        map.setCenter(new LonLat(0.0, 20.0), 3);
         map.setFractionalZoom(true);
     }
 
@@ -1310,8 +1310,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         /* map.addLayer(naturalEarthNP);
         map.addLayer(blueMarbleNP);
         map.addLayer(naturalEarthSP);
-        map.addLayer(blueMarbleSP); */
-        map.addLayer(osmMapnik);
+        map.addLayer(blueMarbleSP);
+        map.addLayer(osmMapnik); */
 
         /*
          * Now global setup stuff. Store the current projection, add the layer
@@ -1329,10 +1329,10 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         baseUrlForExport = rescMapServerUrl;
         
-        /* layersForExport = "naturalearth";
-        map.setBaseLayer(naturalEarth); */
-        layersForExport = "osmMapnik";
-        map.setBaseLayer(osmMapnik);
+        layersForExport = "naturalearth";
+        map.setBaseLayer(naturalEarth);
+        // layersForExport = "osmMapnik";
+        // map.setBaseLayer(osmMapnik);
 
         map.addMapBaseLayerChangedListener(new MapBaseLayerChangedListener() {
             @Override
