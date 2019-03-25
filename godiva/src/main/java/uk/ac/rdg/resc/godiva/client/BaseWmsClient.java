@@ -93,8 +93,7 @@ public abstract class BaseWmsClient
      */
     protected int mapHeight;
     protected int mapWidth;
-    //protected int menuWidth;
-    public int menuWidth;
+    protected int menuWidth;
     protected String proxyUrl = "";
     protected String docHref;
 
@@ -199,7 +198,7 @@ public abstract class BaseWmsClient
                     } else {
                         mapWidth = 750;
                     }
-                    JSONValue menuWidthJson = parentObj.get("menuWidth"); // MAKE THE MENU WIDTH FLEXIBLE
+                    JSONValue menuWidthJson = parentObj.get("menuWidth"); // HZG-EDIT: MAKE THE MENU WIDTH FLEXIBLE
                     if (menuWidthJson != null) {
                         if (menuWidthJson.isString() != null) {
                             menuWidth = Integer.parseInt(menuWidthJson.isString().stringValue());
