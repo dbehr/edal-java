@@ -93,6 +93,7 @@ public abstract class BaseWmsClient
      */
     protected int mapHeight;
     protected int mapWidth;
+    protected int menuWidth;
     protected String proxyUrl = "";
     protected String docHref;
 
@@ -196,6 +197,16 @@ public abstract class BaseWmsClient
                         }
                     } else {
                         mapWidth = 750;
+                    }
+                    JSONValue menuWidthJson = parentObj.get("menuWidth"); // MAKE THE MENU WIDTH FLEXIBLE
+                    if (menuWidthJson != null) {
+                        if (menuWidthJson.isString() != null) {
+                            menuWidth = Integer.parseInt(menuWidthJson.isString().stringValue());
+                        } else if (menuWidthJson.isNumber() != null) {
+                            menuWidth = (int) menuWidthJson.isNumber().doubleValue();
+                        }
+                    } else {
+                        menuWidth = 300;
                     }
 
                     /*
@@ -340,6 +351,7 @@ public abstract class BaseWmsClient
     protected void initWithDefaults() {
         mapHeight = 600;
         mapWidth = 750;
+        menuWidth = 300;
         /*
          * No proxy by default, because by default we run on the same server as
          * ncWMS

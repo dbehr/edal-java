@@ -62,7 +62,8 @@ public class LayoutManager {
             ElevationSelectorIF elevationSelector, PaletteSelectorIF paletteSelector,
             Anchor kmzLink, Anchor permalink, Anchor email, Anchor screenshot, Anchor docLink,
             Image rescLogo, MapArea mapArea, Image loadingImage, AnimationButton anim,
-            PushButton infoButton, PushButton zoomToLayerExtents) {
+            PushButton infoButton, PushButton zoomToLayerExtents, Integer menuHeight) {
+            //PushButton infoButton, PushButton zoomToLayerExtents) {
 
         kmzLink.setStylePrimaryName("linkStyle");
         permalink.setStylePrimaryName("linkStyle");
@@ -135,8 +136,11 @@ public class LayoutManager {
         ScrollPanel layerScrollPanel = new ScrollPanel(layerSelector.asWidget());
         layerScrollPanel.setHeight(((int) mapArea.getMap().getSize().getHeight() + 190 - logoSpace)
                 + "px");
-        layerScrollPanel.setWidth("300px");
-        layerSelector.asWidget().setWidth("300px");
+        // layerScrollPanel.setWidth("300px");
+        // layerSelector.asWidget().setWidth("300px");
+        
+        layerScrollPanel.setWidth(menuHeight + "px");
+        layerSelector.asWidget().setWidth(menuHeight + "px");
 
         VerticalPanel leftPanel = new VerticalPanel();
         leftPanel.add(layerScrollPanel);

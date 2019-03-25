@@ -136,8 +136,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
             if (projection != null) {
                 this.projection = projection;
             } else {
-                //this.projection = "CRS:84";
-                this.projection = "EPSG:3857";
+                this.projection = "CRS:84";
             }
             if (imageFormat != null) {
                 this.imageFormat = imageFormat;
@@ -976,7 +975,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          * mapOptions.setProjection("EPSG:3857"); */
         /* mapOptions.setDisplayProjection(CRS84);
         mapOptions.setDisplayProjection(EPSG3857 EPSG4326); */
-        mapOptions.setDisplayProjection(EPSG3857);
+        mapOptions.setDisplayProjection(EPSG4326);
         mapOptions.removeDefaultControls();
         mapOptions.setControls(new JObjectArray(new JSObject[0]));
         JSObject vendorParams = JSObject.createJSObject();
@@ -995,47 +994,19 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         map.addControl(new MousePosition());
         map.addControl(new PanZoom());
         
-        /*
-         * add LineSymbolizer and TextSymbolizer if necessary:
-         * 
-         * do some imports at the top:
-        import org.gwtopenmaps.openlayers.client.symbolizer.LineSymbolizer;
-		import org.gwtopenmaps.openlayers.client.symbolizer.LineSymbolizerOptions;
-		import org.gwtopenmaps.openlayers.client.symbolizer.TextSymbolizer;
-		import org.gwtopenmaps.openlayers.client.symbolizer.TextSymbolizerOptions;
-		 * 
-        LineSymbolizerOptions lineOptions = new LineSymbolizerOptions();
-        lineOptions.setStrokeColor("#ccccff");
-        lineOptions.setStrokeOpacity(0.5);
-        lineOptions.setStrokeWidth(1);
-
-        LineSymbolizer line = new LineSymbolizer(lineOptions);
-
-        TextSymbolizerOptions textOptions = new TextSymbolizerOptions();
-        textOptions.setFontSize("9px");
-
-		TextSymbolizer text = new TextSymbolizer(textOptions);
-		* 
-		* and add it to the GraticuleControl:
-
-		grtOptions.setLineSymbolyzer(line);
-		grtOptions.setLabelSymbolizer(text);
-
-         */
         final GraticuleOptions grtOptions = new GraticuleOptions();
 
         grtOptions.setTargetSize(300);
 		grtOptions.setLabelled(true);
 		grtOptions.setLabelFormat("D3");
-		/* grtOptions.setLabelFormat("dms");
-		grtOptions.setDisplayProjection(EPSG4326); NOT APPLICABLE */ 
+		// grtOptions.setLabelFormat("dms");
 		Graticule graticule = new Graticule(grtOptions);
         graticule.setAutoActivate(true);
         map.addControl(graticule);
         
         addDrawingLayer();
         map.setMaxExtent(new Bounds(-180, -90, 180, 90));
-        map.setCenter(new LonLat(0.0, 20.0), 3);
+        map.setCenter(new LonLat(0.0, 0.0), 2);
         map.setFractionalZoom(true);
     }
 
@@ -1292,7 +1263,7 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         gebco.addLayerLoadEndListener(loadEndListener);
 
         /*
-         * Basemaps from GEBCO. Note that these need a special copyright message
+         * Basemap from OpenStreetMap, needs special map setup
          */
 		OSM osmMapnik = OSM.Mapnik("Mapnik");
 		osmMapnik.setIsBaseLayer(true);

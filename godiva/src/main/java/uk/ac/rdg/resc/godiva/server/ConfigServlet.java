@@ -96,6 +96,7 @@ public class ConfigServlet extends HttpServlet {
 
                     writer.write("#mapHeight=512\n");
                     writer.write("#mapWidth=1024\n");
+                    writer.write("#menuWidth=300\n");
                     writer.write("#proxy=http://proxyUrlGoesHere/\n");
                     writer.write("# Definition of user layers\n");
                     writer.write("# First we define a layer with ID \"user\"\n");
