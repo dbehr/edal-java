@@ -93,7 +93,8 @@ public abstract class BaseWmsClient
      */
     protected int mapHeight;
     protected int mapWidth;
-    protected int menuWidth;
+    //protected int menuWidth;
+    public int menuWidth;
     protected String proxyUrl = "";
     protected String docHref;
 
