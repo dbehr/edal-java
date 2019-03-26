@@ -278,6 +278,29 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
 
         mainWindow.add(getLayout());
 
+		/* 
+		 * ADDITIONAL LAYOUTS
+		 */
+		
+        /** add the 2nd layout */
+        RootPanel mainWindow2 = RootPanel.get("godiva3-main2");
+        if (mainWindow2 != null) {
+            mainWindow2.add(getLayout());
+        }
+        
+        /** add the 3rd layout */
+        RootPanel mainWindow3 = RootPanel.get("godiva3-main3");
+        if (mainWindow3 != null) {
+            mainWindow3.add(getLayout());
+        }
+        
+        /** add the 4th layout */
+        RootPanel mainWindow4 = RootPanel.get("godiva3-main4");
+        if (mainWindow4 != null) {
+            mainWindow4.add(getLayout());
+        }
+
+
         /*
          * Disable everything because we haven't got any data to plot yet.
          */
