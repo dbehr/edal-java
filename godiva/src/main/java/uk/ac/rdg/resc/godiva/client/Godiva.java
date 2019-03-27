@@ -277,14 +277,6 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
         }
 
         mainWindow.add(getLayout());
-        /*
-         * Disable everything because we haven't got any data to plot yet.
-         */
-        timeSelector.setEnabled(false);
-        elevationSelector.setEnabled(false);
-        paletteSelector.setEnabled(false);
-        unitsInfo.setEnabled(false);
-        copyrightInfo.setEnabled(false);
 
 		/* 
 		 * ADDITIONAL LAYOUTS
@@ -293,35 +285,29 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
         /** add the 2nd layout */
         RootPanel mainWindow2 = RootPanel.get("godiva3-main2");
         if (mainWindow2 != null) {
-            mainWindow2.add(getLayout());
-	        timeSelector.setEnabled(false);
-	        elevationSelector.setEnabled(false);
-	        paletteSelector.setEnabled(false);
-	        unitsInfo.setEnabled(false);
-	        copyrightInfo.setEnabled(false);
+            mainWindow2.add(getLayout2());
         }
         
         /** add the 3rd layout */
         RootPanel mainWindow3 = RootPanel.get("godiva3-main3");
         if (mainWindow3 != null) {
-            mainWindow3.add(getLayout());
-	        timeSelector.setEnabled(false);
-	        elevationSelector.setEnabled(false);
-	        paletteSelector.setEnabled(false);
-	        unitsInfo.setEnabled(false);
-	        copyrightInfo.setEnabled(false);
+            mainWindow3.add(getLayout3());
         }
         
         /** add the 4th layout */
         RootPanel mainWindow4 = RootPanel.get("godiva3-main4");
         if (mainWindow4 != null) {
-            mainWindow4.add(getLayout());
-	        timeSelector.setEnabled(false);
-	        elevationSelector.setEnabled(false);
-	        paletteSelector.setEnabled(false);
-	        unitsInfo.setEnabled(false);
-	        copyrightInfo.setEnabled(false);
+            mainWindow4.add(getLayout4());
         }
+
+        /*
+         * Disable everything because we haven't got any data to plot yet.
+         */
+        timeSelector.setEnabled(false);
+        elevationSelector.setEnabled(false);
+        paletteSelector.setEnabled(false);
+        unitsInfo.setEnabled(false);
+        copyrightInfo.setEnabled(false);
     }
 
     @Override
@@ -1067,5 +1053,26 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
         //                widgetCollection.getElevationSelector(), widgetCollection.getPaletteSelector(),
         //                kmzLink, permalink, email, screenshot, logo, mapArea, loadingImage, anim,
         //                infoButton);
+    }
+    protected Widget getLayout2() {
+        return LayoutManager.getTraditionalGodiva3Layout(layerSelector, titleLabel,
+                widgetCollection.getUnitsInfo(), widgetCollection.getTimeSelector(),
+                widgetCollection.getElevationSelector(), widgetCollection.getPaletteSelector(),
+                kmzLink, permalink, email, screenshot, docLink, logo, mapArea, loadingImage, anim,
+                infoButton, zoomToLayerExtents, menuWidth);
+    }
+    protected Widget getLayout3() {
+        return LayoutManager.getTraditionalGodiva3Layout(layerSelector, titleLabel,
+                widgetCollection.getUnitsInfo(), widgetCollection.getTimeSelector(),
+                widgetCollection.getElevationSelector(), widgetCollection.getPaletteSelector(),
+                kmzLink, permalink, email, screenshot, docLink, logo, mapArea, loadingImage, anim,
+                infoButton, zoomToLayerExtents, menuWidth);
+    }
+    protected Widget getLayout4() {
+        return LayoutManager.getTraditionalGodiva3Layout(layerSelector, titleLabel,
+                widgetCollection.getUnitsInfo(), widgetCollection.getTimeSelector(),
+                widgetCollection.getElevationSelector(), widgetCollection.getPaletteSelector(),
+                kmzLink, permalink, email, screenshot, docLink, logo, mapArea, loadingImage, anim,
+                infoButton, zoomToLayerExtents, menuWidth);
     }
 }
