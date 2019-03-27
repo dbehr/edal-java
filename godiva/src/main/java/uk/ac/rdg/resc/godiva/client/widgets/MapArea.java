@@ -1273,11 +1273,11 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
         /*
          * Add all of the layers in the order we want them displayed
          */
+        map.addLayer(gebco);
         map.addLayer(naturalEarth);
         map.addLayer(blueMarble);
         map.addLayer(nasaBlueMarble);
         map.addLayer(demis);
-        map.addLayer(gebco);
         /* map.addLayer(naturalEarthNP);
         map.addLayer(blueMarbleNP);
         map.addLayer(naturalEarthSP);
@@ -1300,8 +1300,8 @@ public class MapArea extends MapWidget implements OpacitySelectionHandler, Centr
          */
         baseUrlForExport = rescMapServerUrl;
         
-        layersForExport = "naturalearth";
-        map.setBaseLayer(naturalEarth);
+        layersForExport = "gebco";
+        map.setBaseLayer(gebco);
         // layersForExport = "osmMapnik";
         // map.setBaseLayer(osmMapnik);
 
