@@ -152,7 +152,7 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
      */
 
     @Override
-    protected void init(String[] args) {
+    protected void init() {
         String[] mainWindowIds = {"godiva3-main", "godiva3-main2", "godiva3-main3", "godiva3-main4"};
         for (String windowId : mainWindowIds) {
             RootPanel mainWindow = RootPanel.get(windowId);
@@ -200,6 +200,7 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
                  * one WMS layer at a time, this can be set straight away and won't need
                  * modifying
                  */
+                mapArea = getMapArea();
                 mapArea.setTransectLayerId(WMS_LAYER_ID);
 
                 /*
