@@ -152,140 +152,145 @@ public class Godiva extends BaseWmsClient implements AviExportHandler {
      */
 
     @Override
-    protected void init() {
-        String permalinkString = Window.Location.getParameter("permalinking");
-        if (permalinkString != null && Boolean.parseBoolean(permalinkString)) {
-            permalinking = true;
-            permalinkParamsMap = CaseInsensitiveParameterMap
-                    .getMapFromList(Window.Location.getParameterMap());
-        }
-
-        /*
-         * Initialises links.
-         */
-        kmzLink = new Anchor("Open in Google Earth");
-        kmzLink.setStylePrimaryName("linkStyle");
-        kmzLink.setTitle("Open the current view in Google Earth");
-        kmzLink.setEnabled(false);
-
-        permalink = new Anchor("Permalink");
-        permalink.setStylePrimaryName("linkStyle");
-        permalink.setTarget("_blank");
-        permalink.setTitle("Permanent link to the current view");
-        permalink.setEnabled(false);
-
-        email = new Anchor("Email Link");
-        email.setStylePrimaryName("linkStyle");
-        email.setTitle("Email a link to the current view");
-        email.setEnabled(false);
-
-        screenshot = new Anchor("Export to PNG");
-        screenshot.setHref("screenshots/getScreenshot?");
-        screenshot.setStylePrimaryName("linkStyle");
-        screenshot.setTarget("_blank");
-        screenshot.setTitle("Open a downloadable image in a new window - may be slow to load");
-        screenshot.setEnabled(false);
-
-        docLink = new Anchor("Documentation", docHref);
-        docLink.setStylePrimaryName("linkStyle");
-        docLink.setTarget("_blank");
-        docLink.setTitle("Open documentation in a new window");
-
-        /*
-         * This sets which layer a transect will apply to. Since we have only
-         * one WMS layer at a time, this can be set straight away and won't need
-         * modifying
-         */
-        mapArea.setTransectLayerId(WMS_LAYER_ID);
-
-        /*
-         * We use a get method here, so that subclasses can override and use
-         * their own custom implementations.
-         * 
-         * Currently only these widgets are initialised in this method, since
-         * they are the most complex. The other things such as links can easily
-         * be removed and new ones added.
-         */
-        layerSelector = getLayerSelector();
-        ElevationSelectorIF elevationSelector = getElevationSelector();
-        TimeSelectorIF timeSelector = getTimeSelector();
-        PaletteSelectorIF paletteSelector = getPaletteSelector(layerSelector, mapArea);
-
-        UnitsInfoIF unitsInfo = new UnitsInfo();
-        final CopyrightInfoIF copyrightInfo = new CopyrightInfo();
-        final InfoIF moreInfo = new Info();
-
-        widgetCollection = new GodivaStateInfo(elevationSelector, timeSelector, paletteSelector,
-                unitsInfo, copyrightInfo, moreInfo, layerSelector);
-
-        anim = new AnimationButton(mapArea, proxyUrl, layerSelector, timeSelector, this);
-        /*
-         * Start this disabled. It gets enabled when layer details are loaded
-         * (if appropriate)
-         */
-        anim.setEnabled(false);
-
-        logo = getLogo();
-
-        loadingImage = new Image(GWT.getModuleBaseURL() + "img/loading.gif");
-        loadingImage.setVisible(false);
-        loadingImage.setStylePrimaryName("loadingImage");
-
-        infoButton = new PushButton(new Image(GWT.getModuleBaseURL() + "img/info.png"));
-        infoButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                DialogBoxWithCloseButton popup = new DialogBoxWithCloseButton(mapArea);
-                popup.setGlassEnabled(true);
-                popup.setHTML("<b>Information</b>");
-                VerticalPanel vPanel = new VerticalPanel();
-                if (copyrightInfo.hasCopyright()) {
-                    vPanel.add(new HTML("<b>Copyright:</b> " + copyrightInfo.getCopyrightInfo()));
+    protected void init(String[] args) {
+        String[] mainWindowIds = {"godiva3-main", "godiva3-main2", "godiva3-main3", "godiva3-main4"};
+        for (String windowId : mainWindowIds) {
+            RootPanel mainWindow = RootPanel.get(windowId);
+            if (mainWindow != null) {
+                String permalinkString = Window.Location.getParameter("permalinking");
+                if (permalinkString != null && Boolean.parseBoolean(permalinkString)) {
+                    permalinking = true;
+                    permalinkParamsMap = CaseInsensitiveParameterMap
+                            .getMapFromList(Window.Location.getParameterMap());
                 }
-                if (moreInfo.hasInfo()) {
-                    vPanel.add(new HTML("<b>Info:</b> " + moreInfo.getInfo()));
-                }
-                popup.add(vPanel);
-                popup.center();
+
+                /*
+                 * Initialises links.
+                 */
+                kmzLink = new Anchor("Open in Google Earth");
+                kmzLink.setStylePrimaryName("linkStyle");
+                kmzLink.setTitle("Open the current view in Google Earth");
+                kmzLink.setEnabled(false);
+
+                permalink = new Anchor("Permalink");
+                permalink.setStylePrimaryName("linkStyle");
+                permalink.setTarget("_blank");
+                permalink.setTitle("Permanent link to the current view");
+                permalink.setEnabled(false);
+
+                email = new Anchor("Email Link");
+                email.setStylePrimaryName("linkStyle");
+                email.setTitle("Email a link to the current view");
+                email.setEnabled(false);
+
+                screenshot = new Anchor("Export to PNG");
+                screenshot.setHref("screenshots/getScreenshot?");
+                screenshot.setStylePrimaryName("linkStyle");
+                screenshot.setTarget("_blank");
+                screenshot.setTitle("Open a downloadable image in a new window - may be slow to load");
+                screenshot.setEnabled(false);
+
+                docLink = new Anchor("Documentation", docHref);
+                docLink.setStylePrimaryName("linkStyle");
+                docLink.setTarget("_blank");
+                docLink.setTitle("Open documentation in a new window");
+
+                /*
+                 * This sets which layer a transect will apply to. Since we have only
+                 * one WMS layer at a time, this can be set straight away and won't need
+                 * modifying
+                 */
+                mapArea.setTransectLayerId(WMS_LAYER_ID);
+
+                /*
+                 * We use a get method here, so that subclasses can override and use
+                 * their own custom implementations.
+                 * 
+                 * Currently only these widgets are initialised in this method, since
+                 * they are the most complex. The other things such as links can easily
+                 * be removed and new ones added.
+                 */
+                layerSelector = getLayerSelector();
+                ElevationSelectorIF elevationSelector = getElevationSelector();
+                TimeSelectorIF timeSelector = getTimeSelector();
+                PaletteSelectorIF paletteSelector = getPaletteSelector(layerSelector, mapArea);
+
+                UnitsInfoIF unitsInfo = new UnitsInfo();
+                final CopyrightInfoIF copyrightInfo = new CopyrightInfo();
+                final InfoIF moreInfo = new Info();
+
+                widgetCollection = new GodivaStateInfo(elevationSelector, timeSelector, paletteSelector,
+                        unitsInfo, copyrightInfo, moreInfo, layerSelector);
+
+                anim = new AnimationButton(mapArea, proxyUrl, layerSelector, timeSelector, this);
+                /*
+                 * Start this disabled. It gets enabled when layer details are loaded
+                 * (if appropriate)
+                 */
+                anim.setEnabled(false);
+
+                logo = getLogo();
+
+                loadingImage = new Image(GWT.getModuleBaseURL() + "img/loading.gif");
+                loadingImage.setVisible(false);
+                loadingImage.setStylePrimaryName("loadingImage");
+
+                infoButton = new PushButton(new Image(GWT.getModuleBaseURL() + "img/info.png"));
+                infoButton.addClickHandler(new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent event) {
+                        DialogBoxWithCloseButton popup = new DialogBoxWithCloseButton(mapArea);
+                        popup.setGlassEnabled(true);
+                        popup.setHTML("<b>Information</b>");
+                        VerticalPanel vPanel = new VerticalPanel();
+                        if (copyrightInfo.hasCopyright()) {
+                            vPanel.add(new HTML("<b>Copyright:</b> " + copyrightInfo.getCopyrightInfo()));
+                        }
+                        if (moreInfo.hasInfo()) {
+                            vPanel.add(new HTML("<b>Info:</b> " + moreInfo.getInfo()));
+                        }
+                        popup.add(vPanel);
+                        popup.center();
+                    }
+                });
+                infoButton.setEnabled(false);
+                infoButton.setTitle("More infomation about this dataset");
+
+                zoomToLayerExtents = new PushButton(new Image(GWT.getModuleBaseURL() + "img/extents.png"));
+                zoomToLayerExtents.addClickHandler(new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent event) {
+                        mapArea.zoomToExtent(currentLayerExtent);
+                    }
+                });
+                zoomToLayerExtents.setEnabled(false);
+                zoomToLayerExtents.setTitle("Fit the map to this layer's extents");
+
+                /*
+                 * Now get the layout and add it to the main window
+                 */
+
+//                if (mainWindow == null) {
+//                    /*
+//                     * If no "godiva3-main" element is defined, we'll use the whole HTML
+//                     * body
+//                     */
+//                    GWT.log("You should generally define a <div> element with the ID: \"godiva3-main\".  Using the entire HTML body for Godiva3 this time.");
+//                    mainWindow = RootPanel.get();
+//                }
+
+                mainWindow.add(getLayout());
+
+                /*
+                 * Disable everything because we haven't got any data to plot yet.
+                 */
+                timeSelector.setEnabled(false);
+                elevationSelector.setEnabled(false);
+                paletteSelector.setEnabled(false);
+                unitsInfo.setEnabled(false);
+                copyrightInfo.setEnabled(false);
             }
-        });
-        infoButton.setEnabled(false);
-        infoButton.setTitle("More infomation about this dataset");
-
-        zoomToLayerExtents = new PushButton(new Image(GWT.getModuleBaseURL() + "img/extents.png"));
-        zoomToLayerExtents.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                mapArea.zoomToExtent(currentLayerExtent);
-            }
-        });
-        zoomToLayerExtents.setEnabled(false);
-        zoomToLayerExtents.setTitle("Fit the map to this layer's extents");
-
-        /*
-         * Now get the layout and add it to the main window
-         */
-        RootPanel mainWindow = RootPanel.get("godiva3-main");
-
-        if (mainWindow == null) {
-            /*
-             * If no "godiva3-main" element is defined, we'll use the whole HTML
-             * body
-             */
-            GWT.log("You should generally define a <div> element with the ID: \"godiva3-main\".  Using the entire HTML body for Godiva3 this time.");
-            mainWindow = RootPanel.get();
         }
-
-        mainWindow.add(getLayout());
-
-        /*
-         * Disable everything because we haven't got any data to plot yet.
-         */
-        timeSelector.setEnabled(false);
-        elevationSelector.setEnabled(false);
-        paletteSelector.setEnabled(false);
-        unitsInfo.setEnabled(false);
-        copyrightInfo.setEnabled(false);
     }
 
     @Override
